@@ -19,6 +19,7 @@ require 'git/status'
 require 'git/stash'
 require 'git/stashes'
 require 'git/working_directory'
+require 'git/submodule'
 
 lib = Git::Lib.new(nil, nil)
 unless lib.meets_required_version?
@@ -33,7 +34,7 @@ end
 # and more.  You should be able to do most fundamental git
 # operations with this library.
 #
-# This module provides the basic functions to open a git 
+# This module provides the basic functions to open a git
 # reference to work with. You can open a working directory,
 # open a bare repository, initialize a new repo or clone an
 # existing remote repository.
@@ -41,7 +42,7 @@ end
 # Author::    Scott Chacon (mailto:schacon@gmail.com)
 # License::   MIT License
 module Git
-  
+
   #g.config('user.name', 'Scott Chacon') # sets value
   #g.config('user.email', 'email@email.com')  # sets value
   #g.config('user.name')  # returns 'Scott Chacon'
@@ -73,7 +74,7 @@ module Git
   def self.bare(git_dir, options = {})
     Base.bare(git_dir, options)
   end
-    
+
   # clones a remote repository
   #
   # options
@@ -101,7 +102,7 @@ module Git
     repo.checkout("origin/#{options[:branch]}") if options[:branch]
     Dir.chdir(repo.dir.to_s) { FileUtils.rm_r '.git' }
   end
-  
+
   # Same as g.config, but forces it to be at the global level
   #
   #g.config('user.name', 'Scott Chacon') # sets value
@@ -132,7 +133,7 @@ module Git
   end
 
   # open an existing git working directory
-  # 
+  #
   # this will most likely be the most common way to create
   # a git reference, referring to a working directory.
   # if not provided in the options, the library will assume
@@ -144,5 +145,5 @@ module Git
   def self.open(working_dir, options = {})
     Base.open(working_dir, options)
   end
-    
+
 end
